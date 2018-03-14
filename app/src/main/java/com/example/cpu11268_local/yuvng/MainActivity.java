@@ -16,7 +16,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
+
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,30 +26,19 @@ import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
-import com.example.cpu11268_local.yuvng.Adapter.ContactAdapter;
-import com.example.cpu11268_local.yuvng.Model.Contact;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
     FragmentManager fm;
     FragmentTransaction fragmentTransaction;
-    ContactAdapter contactAdapter;
-    List<Contact> contacts;
-    RecyclerView recyclerView;
-    TextView tbTitle;
-    Typeface tf;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setupToolbar(toolbar);
+
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         actionBNav(bottomNavigationView);
@@ -57,18 +46,8 @@ public class MainActivity extends AppCompatActivity {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         actionFAB(fab);
 
-        tbTitle = (TextView) findViewById(R.id.toolbar_title);
-        tf = Typeface.createFromAsset(getAssets(), "fonts/Audiowide.ttf" );
-        tbTitle.setTypeface(tf);
 
-    }
 
-    @SuppressLint("RestrictedApi")
-    private void setupToolbar(Toolbar tb){
-        setSupportActionBar(tb);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
-        tb.setNavigationIcon(R.drawable.ic_action_camera);
     }
 
     private void actionFAB( FloatingActionButton fab){
@@ -91,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
 
                         break;
                     case R.id.action_contact:
-                        tbTitle.setText("Contacts");
                         fm = getSupportFragmentManager();
                         fragmentTransaction = fm.beginTransaction();
                         ContactFragment contactFragment = new ContactFragment();

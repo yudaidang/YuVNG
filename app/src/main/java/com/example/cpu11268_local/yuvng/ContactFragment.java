@@ -1,22 +1,27 @@
 package com.example.cpu11268_local.yuvng;
 
 
+import android.annotation.SuppressLint;
 import android.content.ContentUris;
 import android.database.Cursor;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 
 import com.example.cpu11268_local.yuvng.Adapter.ContactAdapter;
@@ -30,6 +35,8 @@ public class ContactFragment extends Fragment {
     RecyclerView recyclerView;
     List<Contact> contacts;
     ContactAdapter contactAdapter;
+    TextView tbTitle;
+    Typeface tf;
     public ContactFragment() {
         // Required empty public constructor
     }
@@ -37,17 +44,29 @@ public class ContactFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        try {
-            ContactsAsyncTask contactsAsyncTask = new ContactsAsyncTask();
-            contactsAsyncTask.execute();
-        }catch(Exception ex){
-            Log.e("dai", ex.getMessage());
-        }
+
+        ContactsAsyncTask contactsAsyncTask = new ContactsAsyncTask();
+        contactsAsyncTask.execute();
+
         super.onCreate(savedInstanceState);
+    }
+
+    @SuppressLint("RestrictedApi")
+    private void setupToolbar(Toolbar tb){
+        ((AppCompatActivity)getActivity()).setSupportActionBar(tb);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+        tb.setNavigationIcon(R.drawable.ic_action_camera);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        setupToolbar(toolbar);
+        tbTitle = (TextView) view.findViewById(R.id.toolbar_title);
+        tf = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Audiowide.ttf" );
+        tbTitle.setTypeface(tf);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.list_contact);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity().getApplicationContext());
